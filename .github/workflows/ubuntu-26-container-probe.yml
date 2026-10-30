@@ -1,0 +1,21 @@
+name: Ubuntu container OS probe
+
+on:
+  push:
+    branches:
+      - feature/734-test-ubuntu-26
+    paths:
+      - .github/workflows/ubuntu-26-container-probe.yml
+
+permissions: {}
+
+jobs:
+  report-container-os:
+    name: Report Ubuntu container OS
+    runs-on: ubuntu-26.04
+    container: simvascular/libraries:latest
+    steps:
+      - name: Show container OS and architecture
+        run: |
+          cat /etc/os-release
+          uname -m
