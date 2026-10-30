@@ -1,4 +1,4 @@
-name: Ubuntu container OS probe
+name: Ubuntu runner and container OS probe
 
 on:
   push:
@@ -10,9 +10,19 @@ on:
 permissions: {}
 
 jobs:
+  report-runner-os:
+    name: Report ubuntu-latest runner OS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show runner OS, architecture, and kernel
+        run: |
+          cat /etc/os-release
+          uname -m
+          uname -r
+
   report-container-os:
     name: Report Ubuntu container OS
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
     container: simvascular/libraries:latest
     steps:
       - name: Show container OS and architecture
