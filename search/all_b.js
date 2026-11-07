@@ -95,9 +95,10 @@ var searchData=
   ['is_5findex_5ftype_5fv_92',['is_index_type_v',['../group___f_e___common_types.html#ga6331b0babeaa86e99b9d8930f53b39a8',1,'svmp::FE']]],
   ['is_5finitialized_93',['is_initialized',['../class_boundary_condition.html#afb5fc12d83abbbd9c09a01eb1d047d5e',1,'BoundaryCondition']]],
   ['is_5fvalid_94',['is_valid',['../classsvmp_1_1_f_e_1_1_dof_index.html#aa08c28341b3bbd67910ed3794bbb3e20',1,'svmp::FE::DofIndex']]],
-  ['isreqd_95',['isReqd',['../classrmsh_type.html#afe01d3fba20254f640ae6796827b499e',1,'rmshType']]],
-  ['istim_96',['Istim',['../classcep_model_type.html#a1101cae7b7a92d3b2f33c60c3571aac1',1,'cepModelType']]],
-  ['iteration_97',['iteration',['../classsvmp_1_1_f_e_1_1_convergence_exception.html#a520dbfbf46bea31d8263c4cf9bb76f79',1,'svmp::FE::ConvergenceException']]],
-  ['iterator_98',['Iterator',['../class_vector_1_1_iterator.html',1,'Vector']]],
-  ['itr_99',['itr',['../classls_type.html#aa1fc30ce2b86d0aba12f67d208882903',1,'lsType::itr'],['../classeq_type.html#a729d8409204c2eca46848dfdf463e066',1,'eqType::itr']]]
+  ['isotropic_5fconductivity_95',['isotropic_conductivity',['../class_domain_parameters.html#ab2b3f773c688299d072349e89e0bb805',1,'DomainParameters']]],
+  ['isreqd_96',['isReqd',['../classrmsh_type.html#afe01d3fba20254f640ae6796827b499e',1,'rmshType']]],
+  ['istim_97',['Istim',['../classcep_model_type.html#a1101cae7b7a92d3b2f33c60c3571aac1',1,'cepModelType']]],
+  ['iteration_98',['iteration',['../classsvmp_1_1_f_e_1_1_convergence_exception.html#a520dbfbf46bea31d8263c4cf9bb76f79',1,'svmp::FE::ConvergenceException']]],
+  ['iterator_99',['Iterator',['../class_vector_1_1_iterator.html',1,'Vector']]],
+  ['itr_100',['itr',['../classls_type.html#aa1fc30ce2b86d0aba12f67d208882903',1,'lsType::itr'],['../classeq_type.html#a729d8409204c2eca46848dfdf463e066',1,'eqType::itr']]]
 ];

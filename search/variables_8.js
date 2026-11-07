@@ -38,7 +38,8 @@ var searchData=
   ['ionic_5fmodels_35',['ionic_models',['../class_domain_parameters.html#abf4b99b072002c79e4247f1b83284b2c',1,'DomainParameters']]],
   ['is_5ffield_5ftype_5fv_36',['is_field_type_v',['../group___f_e___common_types.html#ga0a634100a57e6b6edaf49dc7365b50d8',1,'svmp::FE']]],
   ['is_5findex_5ftype_5fv_37',['is_index_type_v',['../group___f_e___common_types.html#ga6331b0babeaa86e99b9d8930f53b39a8',1,'svmp::FE']]],
-  ['isreqd_38',['isReqd',['../classrmsh_type.html#afe01d3fba20254f640ae6796827b499e',1,'rmshType']]],
-  ['istim_39',['Istim',['../classcep_model_type.html#a1101cae7b7a92d3b2f33c60c3571aac1',1,'cepModelType']]],
-  ['itr_40',['itr',['../classls_type.html#aa1fc30ce2b86d0aba12f67d208882903',1,'lsType::itr'],['../classeq_type.html#a729d8409204c2eca46848dfdf463e066',1,'eqType::itr']]]
+  ['isotropic_5fconductivity_38',['isotropic_conductivity',['../class_domain_parameters.html#ab2b3f773c688299d072349e89e0bb805',1,'DomainParameters']]],
+  ['isreqd_39',['isReqd',['../classrmsh_type.html#afe01d3fba20254f640ae6796827b499e',1,'rmshType']]],
+  ['istim_40',['Istim',['../classcep_model_type.html#a1101cae7b7a92d3b2f33c60c3571aac1',1,'cepModelType']]],
+  ['itr_41',['itr',['../classls_type.html#aa1fc30ce2b86d0aba12f67d208882903',1,'lsType::itr'],['../classeq_type.html#a729d8409204c2eca46848dfdf463e066',1,'eqType::itr']]]
 ];
