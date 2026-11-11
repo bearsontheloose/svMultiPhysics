@@ -1,0 +1,80 @@
+name: Probe Ubuntu 26 dependency image on fork
+
+on:
+  push:
+    branches:
+      - test/766-dependency-image-final-check
+
+jobs:
+  build:
+    if: github.repository == 'bearsontheloose/svMultiPhysics'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
+    env:
+      IMAGE: ghcr.io/bearsontheloose/svmultiphysics-dependencies
+    steps:
+      - name: Check out test source
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and stage image
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: Docker/ubuntu
+          file: Docker/ubuntu/dockerfile
+          platforms: linux/amd64
+          no-cache: true
+          push: true
+          tags: ${{ env.IMAGE }}:probe-${{ github.sha }}-Release
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.simvascular.build-type=Release
+          build-args: |
+            DEPENDENCY_BUILD_TYPE=Release
+
+      - name: Record dependency versions
+        run: |
+          docker pull --platform linux/amd64 "$IMAGE@${{ steps.build.outputs.digest }}"
+          docker run --rm --platform linux/amd64 "$IMAGE@${{ steps.build.outputs.digest }}" \
+            /usr/local/bin/report-dependency-versions > dependency-versions.txt
+          printf '### Staged dependency image\n\n- Digest: `%s`\n- Source: `%s`\n\n' \
+            '${{ steps.build.outputs.digest }}' '${{ github.sha }}' >> "$GITHUB_STEP_SUMMARY"
+          printf '```text\n' >> "$GITHUB_STEP_SUMMARY"
+          docker run --rm --platform linux/amd64 "$IMAGE@${{ steps.build.outputs.digest }}" \
+            /usr/local/bin/report-dependency-versions --summary >> "$GITHUB_STEP_SUMMARY"
+          printf '```\n' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload dependency inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-versions-${{ github.sha }}
+          path: dependency-versions.txt
+          if-no-files-found: error
+
+  validate-image:
+    needs: build
+    uses: ./.github/workflows/dependency-image-tests.yml
+    permissions:
+      contents: read
+      packages: read
+    with:
+      image: ghcr.io/bearsontheloose/svmultiphysics-dependencies
+      digest: ${{ needs.build.outputs.digest }}
+      source_commit: ${{ github.sha }}
+      build_type: Release
