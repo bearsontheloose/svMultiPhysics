@@ -1,0 +1,87 @@
+name: Probe dependency image promotion on fork
+
+on:
+  push:
+    branches:
+      - test/766-promotion-probe
+
+permissions: {}
+
+jobs:
+  promote:
+    if: github.repository == 'bearsontheloose/svMultiPhysics'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    env:
+      IMAGE: ghcr.io/bearsontheloose/svmultiphysics-dependencies
+      SOURCE_DIGEST: sha256:99464fbe55d6bbc4041eb6d992a82e2157d44f66f0438667d955d003a11124c2
+      TAG_PREFIX: promotion-probe-${{ github.run_id }}
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Promote and verify without rebuilding
+        shell: bash
+        run: |
+          inspect_digest() {
+            docker buildx imagetools inspect "$1" | awk '$1 == "Digest:" { print $2; exit }'
+          }
+
+          promote() {
+            local tag="$1" expected="$2" actual
+            if docker buildx imagetools inspect "$IMAGE:$tag" > /dev/null 2>&1; then
+              actual=$(inspect_digest "$IMAGE:$tag")
+              if [[ "$actual" != "$expected" ]]; then
+                echo "$IMAGE:$tag already points to $actual, not $expected" >&2
+                return 1
+              fi
+            else
+              docker buildx imagetools create --prefer-index=false \
+                --tag "$IMAGE:$tag" "$IMAGE@$expected"
+            fi
+            actual=$(inspect_digest "$IMAGE:$tag")
+            if [[ "$actual" != "$expected" ]]; then
+              echo "$IMAGE:$tag has digest $actual, not $expected" >&2
+              return 1
+            fi
+            echo "Verified $IMAGE:$tag at $actual"
+          }
+
+          actual_source=$(inspect_digest "$IMAGE@$SOURCE_DIGEST")
+          if [[ "$actual_source" != "$SOURCE_DIGEST" ]]; then
+            echo "The validated source digest is unavailable or has changed" >&2
+            exit 1
+          fi
+
+          for stage in dev rc final; do
+            promote "$TAG_PREFIX-$stage" "$SOURCE_DIGEST"
+          done
+
+          # Repeating the same promotion must verify existing tags without rewriting them.
+          for stage in dev rc final; do
+            promote "$TAG_PREFIX-$stage" "$SOURCE_DIGEST"
+          done
+
+          wrong_digest="sha256:$(printf '%064d' 0)"
+          if promote "$TAG_PREFIX-rc" "$wrong_digest"; then
+            echo 'A conflicting source digest was accepted' >&2
+            exit 1
+          fi
+          if [[ "$(inspect_digest "$IMAGE:$TAG_PREFIX-rc")" != "$SOURCE_DIGEST" ]]; then
+            echo 'The conflict check changed the RC probe tag' >&2
+            exit 1
+          fi
+
+          printf '### Fork-only image promotion probe\n\n' >> "$GITHUB_STEP_SUMMARY"
+          printf -- '- Validated source: `%s@%s`\n' "$IMAGE" "$SOURCE_DIGEST" >> "$GITHUB_STEP_SUMMARY"
+          printf -- '- Probe tag prefix: `%s`\n' "$TAG_PREFIX" >> "$GITHUB_STEP_SUMMARY"
+          printf -- '- Dev, RC, and final tags resolve to the source digest.\n' >> "$GITHUB_STEP_SUMMARY"
+          printf -- '- Repeated promotion is idempotent; a conflicting digest is rejected.\n' >> "$GITHUB_STEP_SUMMARY"
