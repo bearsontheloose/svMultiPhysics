@@ -127,6 +127,10 @@ Files</h2></td></tr>
 <tr class="memdesc:_quadrature_rule_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal construction and structural validation for quadrature rules. <br /></td></tr>
 <tr class="memitem:QuadratureRule_2Eh" id="r_QuadratureRule_2Eh"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_quadrature_rule_8h.html">QuadratureRule.h</a></td></tr>
 <tr class="memdesc:_quadrature_rule_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value type for reference-space quadrature rules. <br /></td></tr>
+<tr class="memitem:SymmetricTriangleQuadrature_2Ecpp" id="r_SymmetricTriangleQuadrature_2Ecpp"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_symmetric_triangle_quadrature_8cpp.html">SymmetricTriangleQuadrature.cpp</a></td></tr>
+<tr class="memdesc:_symmetric_triangle_quadrature_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed, contained Dunavant tables and ordered symmetry expansion. <br /></td></tr>
+<tr class="memitem:SymmetricTriangleQuadrature_2Eh" id="r_SymmetricTriangleQuadrature_2Eh"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_symmetric_triangle_quadrature_8h.html">SymmetricTriangleQuadrature.h</a></td></tr>
+<tr class="memdesc:_symmetric_triangle_quadrature_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contained Dunavant rules on the unit right triangle. <br /></td></tr>
 <tr class="memitem:TriangleQuadrature_2Ecpp" id="r_TriangleQuadrature_2Ecpp"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_triangle_quadrature_8cpp.html">TriangleQuadrature.cpp</a></td></tr>
 <tr class="memdesc:_triangle_quadrature_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validated composition of supplied line quadrature into triangle rules. <br /></td></tr>
 <tr class="memitem:TriangleQuadrature_2Eh" id="r_TriangleQuadrature_2Eh"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_triangle_quadrature_8h.html">TriangleQuadrature.h</a></td></tr>
@@ -152,6 +156,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga208d5d7639710707f6daecba7e5e5151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the largest supported Gauss-Legendre exactness request.  <br /></td></tr>
 <tr class="memitem:ga80ed633f39880e6080f67a9b969fee32" id="r_ga80ed633f39880e6080f67a9b969fee32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsvmp_1_1_f_e_1_1quadrature_1_1_quadrature_rule.html">QuadratureRule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga80ed633f39880e6080f67a9b969fee32">svmp::FE::quadrature::make_gauss_legendre_rule</a> (int requested_exactness)</td></tr>
 <tr class="memdesc:ga80ed633f39880e6080f67a9b969fee32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a Gauss-Legendre rule on \([-1,1]\) with at least the requested exactness.  <br /></td></tr>
+<tr class="memitem:gad3a6213a5d9f13d7a1128e28676b7919" id="r_gad3a6213a5d9f13d7a1128e28676b7919"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad3a6213a5d9f13d7a1128e28676b7919">svmp::FE::quadrature::max_symmetric_triangle_exactness</a> () noexcept</td></tr>
+<tr class="memdesc:gad3a6213a5d9f13d7a1128e28676b7919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the largest supported symmetric triangle exactness.  <br /></td></tr>
+<tr class="memitem:ga2323445c88b01b5190dce87875881cf2" id="r_ga2323445c88b01b5190dce87875881cf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsvmp_1_1_f_e_1_1quadrature_1_1_quadrature_rule.html">QuadratureRule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2323445c88b01b5190dce87875881cf2">svmp::FE::quadrature::make_symmetric_triangle_rule</a> (int requested_exactness)</td></tr>
+<tr class="memdesc:ga2323445c88b01b5190dce87875881cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the smallest Dunavant rule meeting the requested degree.  <br /></td></tr>
 <tr class="memitem:gaebb9d6448dd5086d9c4da139dbbdf9bd" id="r_gaebb9d6448dd5086d9c4da139dbbdf9bd"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaebb9d6448dd5086d9c4da139dbbdf9bd">svmp::FE::quadrature::max_triangle_exactness</a> () noexcept</td></tr>
 <tr class="memdesc:gaebb9d6448dd5086d9c4da139dbbdf9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the project bound on requested triangle exactness.  <br /></td></tr>
 <tr class="memitem:ga1cd73259a6b9251c3039b7c9817f8bf0" id="r_ga1cd73259a6b9251c3039b7c9817f8bf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsvmp_1_1_f_e_1_1quadrature_1_1_quadrature_rule.html">QuadratureRule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga1cd73259a6b9251c3039b7c9817f8bf0">svmp::FE::quadrature::make_triangle_centroid_rule</a> ()</td></tr>
@@ -287,6 +295,50 @@ Functions</h2></td></tr>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classsvmp_1_1_f_e_1_1_invalid_argument_exception.html" title="An argument failed validation.">InvalidArgumentException</a></td><td>If <code class="param">requested_exactness</code> is outside the supported range; checked before point-count conversion or allocation. </td></tr>
     <tr><td class="paramname"><a class="el" href="classsvmp_1_1_f_e_1_1_convergence_exception.html" title="Iterative process failed to converge.">ConvergenceException</a></td><td>If root refinement or final numerical validation fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2323445c88b01b5190dce87875881cf2" name="ga2323445c88b01b5190dce87875881cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2323445c88b01b5190dce87875881cf2">&#9670;&#160;</a></span>make_symmetric_triangle_rule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classsvmp_1_1_f_e_1_1quadrature_1_1_quadrature_rule.html">QuadratureRule</a> svmp::FE::quadrature::make_symmetric_triangle_rule </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>requested_exactness</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the smallest Dunavant rule meeting the requested degree. </p>
+<p><b>Reference:</b> D. A. Dunavant (1985), High degree efficient symmetrical Gaussian quadrature rules for the triangle. <a href="https://doi.org/10.1002/nme.1620210612">https://doi.org/10.1002/nme.1620210612</a></p>
+<p>The reference tabulates rules of degrees 1 to 20. Rules 11, 15, 16, 18, and 20 place some points outside the triangle, where the integrand may not be defined, so only degrees 1–10, 12, 13, 14, 17, and 19 are implemented. A request for any other degree returns the next higher implemented one (request 0 returns the degree-1 centroid rule); polynomial_exactness() reports the delivered degree.</p>
+<p>The rules are symmetric: points come in groups of one (the centroid), three, or six that share a weight, each group being the permutations of one point's barycentric coordinates \((1-x-y,x,y)\). Groups follow the reference's order.</p>
+<p>Points lie in the unit triangle \(x,y\geq0,\ x+y\leq1\), with third coordinate exactly zero. Weights sum to the area \(1/2\) within \(5\cdot10^{-15}\), the rounding of the reference's 15-digit tables. The degree-3 and degree-7 rules have a negative weight at the centroid, as in the reference. No clipping or renormalization is applied.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">requested_exactness</td><td>Minimum total degree in [0, 19], inclusive. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Owning Triangle rule reporting its delivered polynomial exactness. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsvmp_1_1_f_e_1_1_invalid_argument_exception.html" title="An argument failed validation.">InvalidArgumentException</a></td><td>If the request is outside [0, 19], checked before table selection or allocation. </td></tr>
   </table>
   </dd>
 </dl>
@@ -473,6 +525,34 @@ Functions</h2></td></tr>
 
 <p>Return the largest supported Gauss-Lobatto-Legendre exactness request. </p>
 <p>Degree 253 corresponds to the internal 128-point project support bound, including both endpoints, which limits generator work and downstream product-rule growth; it is not a mathematical or convergence limit. </p><dl class="section return"><dt>Returns</dt><dd>The inclusive requested-exactness limit, 253. </dd></dl>
+
+</div>
+</div>
+<a id="gad3a6213a5d9f13d7a1128e28676b7919" name="gad3a6213a5d9f13d7a1128e28676b7919"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad3a6213a5d9f13d7a1128e28676b7919">&#9670;&#160;</a></span>max_symmetric_triangle_exactness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int svmp::FE::quadrature::max_symmetric_triangle_exactness </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the largest supported symmetric triangle exactness. </p>
+<dl class="section return"><dt>Returns</dt><dd>19. </dd></dl>
 
 </div>
 </div>

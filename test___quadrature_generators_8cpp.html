@@ -115,6 +115,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="_gauss_lobatto_quadrature_8h_source.html">FE/Quadrature/GaussLobattoQuadrature.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_gauss_quadrature_8h_source.html">FE/Quadrature/GaussQuadrature.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_quadrature_rule_8h_source.html">FE/Quadrature/QuadratureRule.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_symmetric_triangle_quadrature_8h_source.html">FE/Quadrature/SymmetricTriangleQuadrature.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_triangle_quadrature_8h_source.html">FE/Quadrature/TriangleQuadrature.h</a>&quot;</code><br />
 <code>#include &quot;ReferenceMonomialIntegrals.h&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
@@ -133,7 +134,7 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for test_QuadratureGenerators.cpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="test___quadrature_generators_8cpp__incl.svg" width="2675" height="427"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="test___quadrature_generators_8cpp__incl.svg" width="2932" height="427"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
@@ -182,6 +183,16 @@ Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (TriangleDuffyQualification, IntegratesEveryLobattoBackedRequest)</td></tr>
 <tr class="memitem:a0b8ee2bd6bf2c9651d099d3655a403fb" id="r_a0b8ee2bd6bf2c9651d099d3655a403fb"><td class="memItemLeft" align="right" valign="top"><a id="a0b8ee2bd6bf2c9651d099d3655a403fb" name="a0b8ee2bd6bf2c9651d099d3655a403fb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (TriangleDuffyQualification, IntegratesIndependentGaussAndLobattoFactors)</td></tr>
+<tr class="memitem:a8ea4465dd78a46a137dfd1ccbb626647" id="r_a8ea4465dd78a46a137dfd1ccbb626647"><td class="memItemLeft" align="right" valign="top"><a id="a8ea4465dd78a46a137dfd1ccbb626647" name="a8ea4465dd78a46a137dfd1ccbb626647"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (SymmetricTriangleImplementation, AdvancesEveryRequestToARetainedTable)</td></tr>
+<tr class="memitem:ad9d2f23e06cd0f56c4cc73aa282f5bf3" id="r_ad9d2f23e06cd0f56c4cc73aa282f5bf3"><td class="memItemLeft" align="right" valign="top"><a id="ad9d2f23e06cd0f56c4cc73aa282f5bf3" name="ad9d2f23e06cd0f56c4cc73aa282f5bf3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (SymmetricTriangleImplementation, RejectsRequestsOutsideSupportedRange)</td></tr>
+<tr class="memitem:a772ece4afda02de474e294c9a9c344e5" id="r_a772ece4afda02de474e294c9a9c344e5"><td class="memItemLeft" align="right" valign="top"><a id="a772ece4afda02de474e294c9a9c344e5" name="a772ece4afda02de474e294c9a9c344e5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (SymmetricTriangleQualification, FollowsSourceOrbitOrder)</td></tr>
+<tr class="memitem:a3047bb687ebadae4bfdf15ffb45e06f2" id="r_a3047bb687ebadae4bfdf15ffb45e06f2"><td class="memItemLeft" align="right" valign="top"><a id="a3047bb687ebadae4bfdf15ffb45e06f2" name="a3047bb687ebadae4bfdf15ffb45e06f2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (SymmetricTriangleQualification, EveryTableIsExactContainedAndNormalized)</td></tr>
+<tr class="memitem:aeee1e6bcfecf55cdb15edc43f104411c" id="r_aeee1e6bcfecf55cdb15edc43f104411c"><td class="memItemLeft" align="right" valign="top"><a id="aeee1e6bcfecf55cdb15edc43f104411c" name="aeee1e6bcfecf55cdb15edc43f104411c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (SymmetricTriangleCompatibility, MatchesLegacyTri3AndTri6Samples)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Tests for line and triangle quadrature generators. </p>

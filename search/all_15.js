@@ -158,5 +158,7 @@ var searchData=
   ['swap_155',['swap',['../class_boundary_condition.html#aeb9b750d2e061b05e4b1a051c689f265',1,'BoundaryCondition']]],
   ['sym_156',['sym',['../classeq_type.html#a1ea00f2cdccf8b7d61fe0d0a2ddbaa86',1,'eqType']]],
   ['symmetric_5fdyadic_5fproduct_157',['symmetric_dyadic_product',['../namespacemat__fun.html#a1ac506079f38e325c16e6f23acc29dbe',1,'mat_fun']]],
-  ['symmetrictensor_158',['SymmetricTensor',['../group___f_e___common_types.html#gga3cdc47ee75a3358783eccc7438f278eaaf90b5ade43e3d990526185afc110ba96',1,'svmp::FE']]]
+  ['symmetrictensor_158',['SymmetricTensor',['../group___f_e___common_types.html#gga3cdc47ee75a3358783eccc7438f278eaaf90b5ade43e3d990526185afc110ba96',1,'svmp::FE']]],
+  ['symmetrictrianglequadrature_2ecpp_159',['SymmetricTriangleQuadrature.cpp',['../_symmetric_triangle_quadrature_8cpp.html',1,'']]],
+  ['symmetrictrianglequadrature_2eh_160',['SymmetricTriangleQuadrature.h',['../_symmetric_triangle_quadrature_8h.html',1,'']]]
 ];
