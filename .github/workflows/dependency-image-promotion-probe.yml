@@ -1,4 +1,4 @@
-name: Probe dependency image promotion on fork
+name: Promote validated dependency image on fork
 
 on:
   push:
@@ -12,12 +12,40 @@ jobs:
     if: github.repository == 'bearsontheloose/svMultiPhysics'
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       packages: write
     env:
       IMAGE: ghcr.io/bearsontheloose/svmultiphysics-dependencies
-      SOURCE_DIGEST: sha256:99464fbe55d6bbc4041eb6d992a82e2157d44f66f0438667d955d003a11124c2
-      TAG_PREFIX: promotion-probe-${{ github.run_id }}
+      SOURCE_DIGEST: sha256:500048fdad3f0177557a92ab4984b805741240bdcf4b81f8409b7dad470a45cd
+      SOURCE_COMMIT: 8acd5a922031424e7d0bb7be39f0d56daa7ef40d
+      PROBE_COMMIT: ef7315472150b4f83c25538048cd9ec77afdac54
+      IMAGE_TAG: 1.0.0.1-dev
+      GIT_TAG: v1.0.0.1-dev
     steps:
+      - name: Check out fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify source and tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main "$PROBE_COMMIT"
+          [[ "$(git rev-parse origin/main)" == "$SOURCE_COMMIT" ]] || {
+            echo 'Fork main no longer matches the selected upstream commit' >&2
+            exit 1
+          }
+          [[ "$(git rev-parse "$SOURCE_COMMIT:Docker/ubuntu")" == "$(git rev-parse "$PROBE_COMMIT:Docker/ubuntu")" ]] || {
+            echo 'The tested and release Docker contexts differ' >&2
+            exit 1
+          }
+          existing=$(git ls-remote --refs --tags origin "refs/tags/$GIT_TAG" | awk '{ print $1 }')
+          if [[ -n "$existing" && "$existing" != "$SOURCE_COMMIT" ]]; then
+            echo "$GIT_TAG already points to $existing" >&2
+            exit 1
+          fi
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -31,6 +59,7 @@ jobs:
       - name: Promote and verify without rebuilding
         shell: bash
         run: |
+          set -euo pipefail
           inspect_digest() {
             local digest
             for attempt in {1..8}; do
@@ -45,53 +74,34 @@ jobs:
             return 1
           }
 
-          promote() {
-            local tag="$1" expected="$2" actual
-            if docker buildx imagetools inspect "$IMAGE:$tag" > /dev/null 2>&1; then
-              actual=$(inspect_digest "$IMAGE:$tag")
-              if [[ "$actual" != "$expected" ]]; then
-                echo "$IMAGE:$tag already points to $actual, not $expected" >&2
-                return 1
-              fi
-            else
-              docker buildx imagetools create --prefer-index=false \
-                --tag "$IMAGE:$tag" "$IMAGE@$expected"
-            fi
-            actual=$(inspect_digest "$IMAGE:$tag")
-            if [[ "$actual" != "$expected" ]]; then
-              echo "$IMAGE:$tag has digest $actual, not $expected" >&2
-              return 1
-            fi
-            echo "Verified $IMAGE:$tag at $actual"
+          [[ "$(inspect_digest "$IMAGE@$SOURCE_DIGEST")" == "$SOURCE_DIGEST" ]]
+          if docker buildx imagetools inspect "$IMAGE:$IMAGE_TAG" > /dev/null 2>&1; then
+            actual=$(inspect_digest "$IMAGE:$IMAGE_TAG")
+            [[ "$actual" == "$SOURCE_DIGEST" ]] || {
+              echo "$IMAGE:$IMAGE_TAG already points to $actual" >&2
+              exit 1
+            }
+          else
+            docker buildx imagetools create --prefer-index=false \
+              --tag "$IMAGE:$IMAGE_TAG" "$IMAGE@$SOURCE_DIGEST"
+          fi
+          [[ "$(inspect_digest "$IMAGE:$IMAGE_TAG")" == "$SOURCE_DIGEST" ]] || {
+            echo 'Promoted image digest differs from the validated image' >&2
+            exit 1
           }
 
-          actual_source=$(inspect_digest "$IMAGE@$SOURCE_DIGEST")
-          if [[ "$actual_source" != "$SOURCE_DIGEST" ]]; then
-            echo "The validated source digest is unavailable or has changed" >&2
-            exit 1
+      - name: Tag the corresponding fork commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing=$(git ls-remote --refs --tags origin "refs/tags/$GIT_TAG" | awk '{ print $1 }')
+          if [[ -n "$existing" ]]; then
+            [[ "$existing" == "$SOURCE_COMMIT" ]] || exit 1
+          else
+            git tag "$GIT_TAG" "$SOURCE_COMMIT"
+            git push origin "refs/tags/$GIT_TAG"
           fi
-
-          for stage in dev rc final; do
-            promote "$TAG_PREFIX-$stage" "$SOURCE_DIGEST"
-          done
-
-          # Repeating the same promotion must verify existing tags without rewriting them.
-          for stage in dev rc final; do
-            promote "$TAG_PREFIX-$stage" "$SOURCE_DIGEST"
-          done
-
-          wrong_digest="sha256:$(printf '%064d' 0)"
-          if promote "$TAG_PREFIX-rc" "$wrong_digest"; then
-            echo 'A conflicting source digest was accepted' >&2
-            exit 1
-          fi
-          if [[ "$(inspect_digest "$IMAGE:$TAG_PREFIX-rc")" != "$SOURCE_DIGEST" ]]; then
-            echo 'The conflict check changed the RC probe tag' >&2
-            exit 1
-          fi
-
-          printf '### Fork-only image promotion probe\n\n' >> "$GITHUB_STEP_SUMMARY"
-          printf -- '- Validated source: `%s@%s`\n' "$IMAGE" "$SOURCE_DIGEST" >> "$GITHUB_STEP_SUMMARY"
-          printf -- '- Probe tag prefix: `%s`\n' "$TAG_PREFIX" >> "$GITHUB_STEP_SUMMARY"
-          printf -- '- Dev, RC, and final tags resolve to the source digest.\n' >> "$GITHUB_STEP_SUMMARY"
-          printf -- '- Repeated promotion is idempotent; a conflicting digest is rejected.\n' >> "$GITHUB_STEP_SUMMARY"
+          printf 'Promoted `%s@%s` to `%s:%s` without rebuilding.\n' \
+            "$IMAGE" "$SOURCE_DIGEST" "$IMAGE" "$IMAGE_TAG" >> "$GITHUB_STEP_SUMMARY"
+          printf 'Fork Git tag `%s` points to `%s`. The image revision label names the tested probe commit `%s`; the Docker build context is identical.\n' \
+            "$GIT_TAG" "$SOURCE_COMMIT" "$PROBE_COMMIT" >> "$GITHUB_STEP_SUMMARY"
