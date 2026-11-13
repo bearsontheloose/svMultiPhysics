@@ -1,6 +1,9 @@
 name: Build Ubuntu 26 packages
 
 on:
+  push:
+    branches:
+      - test/771-package-workflow-push
   workflow_dispatch:
     inputs:
       dependency_image:
